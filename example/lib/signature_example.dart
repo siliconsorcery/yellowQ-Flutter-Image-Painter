@@ -30,18 +30,17 @@ class _SignatureExampleState extends State<SignatureExample> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-          child: const Icon(Icons.save), onPressed: saveImage),
+      floatingActionButton: FloatingActionButton(child: const Icon(Icons.save), onPressed: saveImage),
     );
   }
 
   void saveImage() async {
-    final image = await _imageKey.currentState.exportImage();
+    final image = await _imageKey.currentState?.exportImage();
     final directory = (await getApplicationDocumentsDirectory()).path;
     await Directory('$directory/sample').create(recursive: true);
     final fullPath = '$directory/sample/image.png';
     final imgFile = File('$fullPath');
-    imgFile.writeAsBytesSync(image);
+    imgFile.writeAsBytesSync(image!);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         backgroundColor: Colors.grey[700],
@@ -49,8 +48,7 @@ class _SignatureExampleState extends State<SignatureExample> {
         content: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text("Image Exported successfully.",
-                style: TextStyle(color: Colors.white)),
+            const Text("Image Exported successfully.", style: TextStyle(color: Colors.white)),
             TextButton(
               onPressed: () => OpenFile.open("$fullPath"),
               child: Text(
